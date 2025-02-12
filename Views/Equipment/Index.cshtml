@@ -1,0 +1,92 @@
+﻿
+@model List<DotnetFramework48Lab01.Models.EquipmentCheck>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+}
+
+<div class="mt-4 container">
+    <h2 class="mb-4">Equipment Monthly Check</h2>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-striped table">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Equipment Name</th>
+                    @for (int i = 1; i <= daysInMonth; i++)
+                    {
+                        <th>@i</th>
+                    }
+                    <th style="width:600px">Leader</th>
+                    <th>Management</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int rowNumber = 0; }
+                @foreach (var equipment in Model)
+                {
+                    rowNumber++;
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("EquipmentChecklist", "Equipment", new { equipmentId = equipment.Id })" class="btn btn-warning btn-sm" style="width:300px;text-align:left;">
+                                @rowNumber
+                                .
+                                @equipment.EquipmentName.ToString()
+                            </a>
+                        </td>
+                        @for (int i = 1; i <= daysInMonth; i++)
+                        {
+                            <td class="text-center">
+                                <a href="@Url.Action("DayDetails", "Equipment", new { equipmentId = equipment.Id, day = i })">
+                                    @if (equipment.DailyStatuses.ContainsKey(i))
+                                    {
+                                        switch (equipment.DailyStatuses[i])
+                                        {
+                                            case "Checked":
+                                                <span class="p-2 badge bg-success" data-toggle="tooltip" data-placement="top" title="Checked">✅</span>
+                                                break;
+                                            case "Partially Checked":
+                                                <span style="border: 1px solid #b5b5b5" class="p-2 badge bg-light" data-toggle="tooltip" data-placement="top" title="Partially Checked">⏳</span>
+                                                break;
+                                            case "Not Checked":
+                                                <span style="background-color: #ffdb6d; border: 1px solid #b5b5b5;" class="p-2 badge" data-toggle="tooltip" data-placement="top" title="Not Checked">❌</span>
+                                                break;
+                                            case "Equipment Breakdown":
+                                                <span class="p-2 badge bg-secondary" data-toggle="tooltip" data-placement="top" title="Breakdown">🔧</span>
+                                                break;
+                                            case "Under Maintenance":
+                                                <span style="background-color: #fff793; border: 1px solid #b5b5b5 " class="p-2 badge" data-toggle="tooltip" data-placement="top" title="Maintenance">🛠</span>
+                                                break;
+                                            default:
+                                                <span class="p-2 badge bg-light">-</span>
+                                                break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="p-2 badge bg-light">🗌</span>
+                                    }
+                                </a>
+                            </td>
+                        }
+                        <td>
+                            @foreach (var recheck in equipment.LeaderRechecks)
+                            {
+                                @*<strong>@recheck.LeaderName</strong>
+                                    <small class="text-muted">@recheck.RecheckDate.ToString("dd/MM/yyyy")</small>*@
+                            }
+                        </td>
+                        <td class="text-center">
+                            <strong>@(equipment.ManagementName ?? "-")</strong><br />
+                            <small class="text-muted">
+                                @(equipment.ManagementApproveDate.HasValue ? equipment.ManagementApproveDate.Value.ToString("dd/MM/yyyy") : "-")
+                            </small>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

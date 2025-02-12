@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "EquipmentChecklist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Checklist ของ @ViewBag.EquipmentName</h2>
+<ul>
+    @foreach (var item in ViewBag.ChecklistItems)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+<a href="@Url.Action("Index", "Equipment")">🔙 กลับ</a>

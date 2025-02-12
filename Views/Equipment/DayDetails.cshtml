@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "DayDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>รายละเอียดการตรวจสอบ</h2>
+<p><strong>เครื่องจักร:</strong> @ViewBag.EquipmentName</p>
+<p><strong>วันที่:</strong> @ViewBag.Day</p>
+<p><strong>สถานะ:</strong> @ViewBag.Status</p>
+
+<a href="@Url.Action("Index", "Equipment")">🔙 กลับ</a>
