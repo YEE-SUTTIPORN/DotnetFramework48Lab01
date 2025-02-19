@@ -105,6 +105,42 @@ namespace DotnetFramework48Lab01.Controllers
             return View();
         }
 
+        public ActionResult Checklist()
+        {
+            var equipmentList = new List<Equipment>
+            {
+                new Equipment { Id = 1, Name = "Scanner" },
+                new Equipment { Id = 2, Name = "Battery" },
+                new Equipment { Id = 3, Name = "Screen Display" }
+            };
 
+            return View(equipmentList);
+        }
+
+        [HttpPost]
+        public ActionResult SubmitChecklist(List<EquipmentChecklist> checklist)
+        {
+            if (checklist != null)
+            {
+                // บันทึกข้อมูลลงฐานข้อมูล (ยังไม่รวมการเชื่อมต่อฐานข้อมูล)
+            }
+
+            return RedirectToAction("Checklist");
+        }
+
+    }
+
+    public class Equipment
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class EquipmentChecklist
+    {
+        public int EquipmentId { get; set; }
+        public string EquipmentName { get; set; }
+        public string Status { get; set; }  // "OK" หรือ "Not OK"
+        public string Remark { get; set; }  // คำอธิบายเพิ่มเติม
     }
 }

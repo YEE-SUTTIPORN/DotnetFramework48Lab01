@@ -215,6 +215,7 @@
     <Content Include="Views\Equipment\Index.cshtml" />
     <Content Include="Views\Equipment\DayDetails.cshtml" />
     <Content Include="Views\Equipment\EquipmentChecklist.cshtml" />
+    <Content Include="Views\Equipment\Checklist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
