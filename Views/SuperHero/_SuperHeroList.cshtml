@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DotnetFramework48Lab01.Models.SupperHeroModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SuperHeroName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SuperHeroPower)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SuperHeroName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SuperHeroPower)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                <button onclick="deleteHero(@item.Id)">Delete</button> <!-- ✅ ใช้ AJAX -->
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function deleteHero(id) {
+        $.post('/SuperHero/Delete/' + id, function (data) {
+            $('#SuperHeroList').html(data); // ✅ Refresh เฉพาะ Partial View
+        });
+    }
+</script>

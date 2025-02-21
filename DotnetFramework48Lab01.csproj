@@ -131,6 +131,7 @@
     <Compile Include="Controllers\EquipmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SuperHeroController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Data\AppDbContext.cs" />
     <Compile Include="Filters\RoleAuthorize.cs" />
@@ -141,10 +142,15 @@
     <Compile Include="Migrations\202502101434282_initial.Designer.cs">
       <DependentUpon>202502101434282_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202502211624563_addsuperherotable.cs" />
+    <Compile Include="Migrations\202502211624563_addsuperherotable.Designer.cs">
+      <DependentUpon>202502211624563_addsuperherotable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EquipmentCheck.cs" />
     <Compile Include="Models\LeaderRecheck.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SupperHeroModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserRoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -182,6 +188,7 @@
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -216,6 +223,8 @@
     <Content Include="Views\Equipment\DayDetails.cshtml" />
     <Content Include="Views\Equipment\EquipmentChecklist.cshtml" />
     <Content Include="Views\Equipment\Checklist.cshtml" />
+    <Content Include="Views\SuperHero\Index.cshtml" />
+    <Content Include="Views\SuperHero\_SuperHeroList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -250,6 +259,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202502101434282_initial.resx">
       <DependentUpon>202502101434282_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502211624563_addsuperherotable.resx">
+      <DependentUpon>202502211624563_addsuperherotable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

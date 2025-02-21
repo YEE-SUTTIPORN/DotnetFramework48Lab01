@@ -1,4 +1,5 @@
-﻿using DotnetFramework48Lab01.Models;
+﻿using DotnetFramework48Lab01.Controllers;
+using DotnetFramework48Lab01.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,5 +17,7 @@ namespace DotnetFramework48Lab01.Data
         public DbSet<RoleModel> Roles { get; set; }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<UserRoleModel> UserRoles { get; set; }
+        public DbSet<SupperHeroModel> SuperHeroes { get; set; }
+
     }
 }
