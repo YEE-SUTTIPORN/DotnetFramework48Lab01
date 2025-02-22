@@ -1,0 +1,33 @@
+﻿@model List<DotnetFramework48Lab01.Controllers.ChecklistItem>
+
+@{
+    ViewBag.Title = "Complete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center">Checklist Completed!</h2>
+    <p class="text-center">ขอบคุณที่ทำการตรวจสอบอุปกรณ์เรียบร้อยแล้ว</p>
+    <hr />
+    <h4>สรุปผล</h4>
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                <strong>@item.Id. @item.Question</strong> :
+                @if (item.InputType == "boolean")
+                {
+                    @item.Answer
+                    if (item.Answer == "Not OK" && !string.IsNullOrEmpty(item.DamageReason))
+                    {
+                        <span class="text-danger"> (สาเหตุ: @item.DamageReason)</span>
+                    }
+                }
+                else
+                {
+                    @item.Comment
+                }
+            </li>
+        }
+    </ul>
+</div>

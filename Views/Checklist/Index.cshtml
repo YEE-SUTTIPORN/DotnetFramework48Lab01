@@ -1,0 +1,109 @@
+﻿@model DotnetFramework48Lab01.Controllers.ChecklistItem
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <!-- ส่วนหัวของ Checklist -->
+    <div class="header">
+        <h2>Checklist สำหรับ @Model.Equipment</h2>
+        <p>Honeywell CK65</p>
+    </div>
+    <!-- แสดงคำถาม -->
+    <div class="question">
+        @Model.Id. @Model.Question
+    </div>
+    <!-- แบบฟอร์มตอบคำถาม -->
+    @using (Html.BeginForm("Index", "Checklist", FormMethod.Post))
+    {
+        if (Model.InputType == "boolean")
+        {
+            <div class="form-check form-check-inline">
+                @Html.RadioButtonFor(m => m.Answer, "OK", new { id = "radioOK", @class = "form-check-input" })
+                <label class="form-check-label" for="radioOK">OK</label>
+            </div>
+            <div class="form-check form-check-inline">
+                @Html.RadioButtonFor(m => m.Answer, "Not OK", new { id = "radioNotOK", @class = "form-check-input" })
+                <label class="form-check-label" for="radioNotOK">Not OK</label>
+            </div>
+        }
+        else if (Model.InputType == "text")
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Comment, "กรอกข้อมูล:")
+                @Html.TextBoxFor(m => m.Comment, new { @class = "form-control", placeholder = "ระบุข้อมูล" })
+            </div>
+        }
+        <!-- Hidden field สำหรับเก็บ DamageReason -->
+        @Html.HiddenFor(m => m.DamageReason)
+        <div class="btn-group">
+            <button type="submit" name="action" value="back" class="btn btn-secondary">Back</button>
+            <button type="submit" name="action" value="next" class="btn btn-primary">Next</button>
+        </div>
+        <!-- ส่งค่า Id (ซ่อน) -->
+        @Html.HiddenFor(m => m.Id)
+    }
+</div>
+
+<!-- Modal สำหรับเลือกระบุสาเหตุความเสียหาย -->
+<div class="modal fade" id="damageModal" tabindex="-1" role="dialog" aria-labelledby="damageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="damageModalLabel">ระบุสาเหตุความเสียหาย</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="ปิด">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-check">
+                    <input class="form-check-input damage-reason" type="radio" name="damageReason" id="reason1" value="แตกหัก">
+                    <label class="form-check-label" for="reason1">แตกหัก</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input damage-reason" type="radio" name="damageReason" id="reason2" value="น้ำมันเครื่อง">
+                    <label class="form-check-label" for="reason2">น้ำมันเครื่อง</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input damage-reason" type="radio" name="damageReason" id="reason3" value="หมดอายุใช้งาน">
+                    <label class="form-check-label" for="reason3">หมดอายุใช้งาน</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input damage-reason" type="radio" name="damageReason" id="reason4" value="อื่น ๆ">
+                    <label class="form-check-label" for="reason4">อื่น ๆ</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmDamageReason">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("input[name='Answer']").change(function () {
+                if ($(this).val() === "Not OK") {
+                    $("#damageModal").modal("show");
+                } else {
+                    $("#DamageReason").val("");
+                }
+            });
+
+            $("#confirmDamageReason").click(function () {
+                var selected = $("input.damage-reason:checked").val();
+                if (selected) {
+                    $("#DamageReason").val(selected);
+                    $("#damageModal").modal("hide");
+                }
+                else {
+                    alert("กรุณาเลือกระบุสาเหตุความเสียหาย");
+                }
+            });
+        });
+
+    </script>
+} 
