@@ -42,10 +42,12 @@
 
 </table>
 
-<script>
-    function deleteHero(id) {
-        $.post('/SuperHero/Delete/' + id, function (data) {
-            $('#SuperHeroList').html(data); // ✅ Refresh เฉพาะ Partial View
-        });
-    }
-</script>
+@section Scripts{
+    <script>
+        function deleteHero(id) {
+            $.post('/SuperHero/Delete/' + id, function (data) {
+                $('#SuperHeroList').html(data); // ✅ Refresh เฉพาะ Partial View
+            });
+        }
+    </script>
+}

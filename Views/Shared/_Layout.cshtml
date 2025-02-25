@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var selectedSection = Session["Section"] as string ?? "Infrastructure";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,6 +31,15 @@
                     <li>@Html.ActionLink("Admin Dashboard", "AdminDashboard", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Equipment", "Index", "Equipment", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+            </div>
+            <div>
+                <form id="sectionForm" method="post" action="@Url.Action("SetSection", "Home")">
+                    <select name="section" id="sectionDropdown" class="form-control" onchange="document.getElementById('sectionForm').submit();">
+                        <option value="Infrastructure" @(selectedSection == "Infrastructure" ? "selected" : "")>Infrastructure</option>
+                        <option value="Application" @(selectedSection == "Application" ? "selected" : "")>Application</option>
+                        <option value="Other" @(selectedSection == "Other" ? "selected" : "")>Other</option>
+                    </select>
+                </form>
             </div>
         </div>
     </nav>

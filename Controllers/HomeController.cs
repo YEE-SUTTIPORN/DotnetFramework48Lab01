@@ -7,11 +7,19 @@ using System.Web.Mvc;
 
 namespace DotnetFramework48Lab01.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
+        [HttpPost]
+        public ActionResult SetSection(string section)
+        {
+            Session["Section"] = section;
+            return Redirect(Request.UrlReferrer.ToString()); // Redirect กลับไปยังหน้าเดิม
+        }
+
         public ActionResult Index()
         {
+            var section = Session["Section"] as string ?? "Infrastructure";
+            ViewBag.Section = section;
             return View();
         }
 
