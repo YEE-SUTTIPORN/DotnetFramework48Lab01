@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotnetFramework48Lab01.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DotnetFramework48Lab01.Controllers
 {
+    [LogActionFilter]
     public class ChecklistController : Controller
     {
         // Static variable สำหรับจำลองข้อมูล Checklist

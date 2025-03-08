@@ -1,4 +1,5 @@
 ﻿using DotnetFramework48Lab01.Data;
+using DotnetFramework48Lab01.Filters;
 using DotnetFramework48Lab01.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DotnetFramework48Lab01.Controllers
 {
+    [LogActionFilter]
     public class UserRoleController : Controller
     {
         private AppDbContext db = new AppDbContext();

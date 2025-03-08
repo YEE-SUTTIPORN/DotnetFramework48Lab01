@@ -1,4 +1,5 @@
-﻿using DotnetFramework48Lab01.Models;
+﻿using DotnetFramework48Lab01.Filters;
+using DotnetFramework48Lab01.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DotnetFramework48Lab01.Controllers
 {
+    [LogActionFilter]
     public class EquipmentController : Controller
     {
         private static List<EquipmentCheck> equipmentList = new List<EquipmentCheck>

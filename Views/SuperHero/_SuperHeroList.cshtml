@@ -1,7 +1,13 @@
 ﻿@model IEnumerable<DotnetFramework48Lab01.Models.SupperHeroModel>
 
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
 <table class="table">
     <tr>
+        <th>Image</th>
         <th>
             @Html.DisplayNameFor(model => model.SuperHeroName)
         </th>
@@ -19,7 +25,24 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr style="height:100px">
+            <td>
+                @if (item.Image != null)
+                {
+                    string base64Image = Convert.ToBase64String(item.Image);
+                    string imgSrc = $"data:image/jpeg;base64,{base64Image}";
+
+                    <!-- รูปภาพที่สามารถกดขยายได้ -->
+                    <img src="@imgSrc" alt="Super Hero Image"
+                         class="img-thumbnail zoomable-image"
+                         data-img="@imgSrc"
+                         style="width: 75px; height: 75px; cursor: pointer; border-radius: 8px;" />
+                }
+                else
+                {
+                    <span>ไม่มีรูป</span>
+                }
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SuperHeroName)
             </td>
@@ -42,12 +65,10 @@
 
 </table>
 
-@section Scripts{
-    <script>
-        function deleteHero(id) {
-            $.post('/SuperHero/Delete/' + id, function (data) {
-                $('#SuperHeroList').html(data); // ✅ Refresh เฉพาะ Partial View
-            });
-        }
-    </script>
-}
+<script>
+    function deleteHero(id) {
+        $.post('/SuperHero/Delete/' + id, function (data) {
+            $('#SuperHeroList').html(data); // ✅ Refresh เฉพาะ Partial View
+        });
+    }
+</script>

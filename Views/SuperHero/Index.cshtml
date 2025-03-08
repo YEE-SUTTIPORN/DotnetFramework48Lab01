@@ -7,6 +7,23 @@
 
 <h2>Index</h2>
 
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Super Hero Image</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Expanded Image" class="img-fluid" style="border-radius: 8px;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @using (Html.BeginForm("Create", "SuperHero", FormMethod.Post, new { id = "formList" }))
 {
     @Html.AntiForgeryToken()
@@ -14,7 +31,8 @@
     <div class="form-horizontal">
         <h4>SupperHeroModel</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="errorMessage" style="display:none;" class="alert alert-danger"></div>
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.SuperHeroName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -30,6 +48,16 @@
                 @Html.ValidationMessageFor(model => model.SuperHeroPower, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="Image" id="Image" class="form-control", accept=".png,.jpg" />
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" id="createBtn" class="btn btn-primary">
@@ -48,6 +76,7 @@
 <div id="SuperHeroList">
     @Html.Action("GetSuperHero")
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
@@ -70,18 +99,30 @@
                 $("#btnText").text("Loading...");
                 btn.prop("disabled", true);
 
-                var obj = {
-                    SuperHeroName: $("#SuperHeroName").val(),
-                    SuperHeroPower: $("#SuperHeroPower").val()
-                }
+                //var obj = {
+                //    SuperHeroName: $("#SuperHeroName").val(),
+                //    SuperHeroPower: $("#SuperHeroPower").val(),
+
+                //}
+
+                var formData = new FormData(this);
+
 
                 $.ajax({
                     url: '@Url.Action("Create", "SuperHero")',
                     type: 'POST',
-                    data: obj,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function (data) {
-                        $("#formList")[0].reset();
-                        $('#SuperHeroList').html(data);
+                        if (data.success == false) {
+                            $("#errorMessage").text(data.message);
+                            $("#errorMessage").show();
+                        } else {
+                            $("#formList")[0].reset();
+                            $("#errorMessage").hide();
+                            $("#SuperHeroList").html(data);
+                        }
                     },
                     complete: function () {
                         $("#spinner").addClass("d-none"); // ซ่อน Spinner
@@ -91,6 +132,13 @@
                 });
             });
         });
+
+        $(document).on("click", ".zoomable-image", function (e) {
+            var imgSrc = $(this).attr("data-img"); // ดึง src ของรูป
+            $("#modalImage").attr("src", imgSrc); // ตั้งค่ารูปใน Modal
+            $("#imageModal").modal("show"); // เปิด Modal
+        });
+
     </script>
 
 

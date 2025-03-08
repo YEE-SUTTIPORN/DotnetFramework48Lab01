@@ -1,4 +1,6 @@
 ﻿using DotnetFramework48Lab01.Data;
+using DotnetFramework48Lab01.Filters;
+using DotnetFramework48Lab01.Helpers;
 using DotnetFramework48Lab01.Models;
 using DotnetFramework48Lab01.ViewModels;
 using System;
@@ -12,6 +14,7 @@ using System.Web.Security;
 namespace DotnetFramework48Lab01.Controllers
 {
     [Authorize]
+    [LogActionFilter]
     public class AccountController : Controller
     {
         private AppDbContext db = new AppDbContext();
@@ -53,6 +56,10 @@ namespace DotnetFramework48Lab01.Controllers
         [AllowAnonymous]
         public ActionResult Login(LoginDto obj)
         {
+            SessionHelper.SetSessionValue(SessionKey.SectionID, "1");
+            string ss = SessionHelper.GetSessionValue(SessionKey.SectionID);
+
+
             var user = db.Users.FirstOrDefault(u => u.Username == obj.Username && u.PasswordHash == obj.Password);
             if (user != null)
             {

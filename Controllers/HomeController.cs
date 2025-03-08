@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DotnetFramework48Lab01.Controllers
 {
+    [LogActionFilter]
     public class HomeController : Controller
     {
         [HttpPost]
